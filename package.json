@@ -1,5 +1,5 @@
 {
-  "name": "next-contentful-starter",
+  "name": "next-prismic-starter",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,8 +9,9 @@
     "export": "next export"
   },
   "dependencies": {
-    "contentful": "^7.14.6",
     "next": "9.5.0",
+    "prismic-javascript": "^3.0.1",
+    "prismic-reactjs": "^1.3.2",
     "react": "16.13.1",
     "react-dom": "16.13.1"
   }
