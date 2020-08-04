@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import { usePosts } from '@utils/contentfulPosts'
+import { usePosts } from '@utils/prismicPosts'
 
 import Header from '@components/Header'
 import Footer from '@components/Footer'
@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Next + Contentful Starter</title>
+        <title>Next + Prismic Starter</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -66,3 +66,15 @@ export default function Home() {
     </div>
   )
 }
+
+// export async function getStaticProps({ params, preview = false, previewData }) {
+//   const data = await getPostAndMorePosts(params.slug, previewData)
+
+//   return {
+//     props: {
+//       preview,
+//       post: data?.post ?? null,
+//       morePosts: data?.morePosts ?? [],
+//     },
+//   }
+// }
