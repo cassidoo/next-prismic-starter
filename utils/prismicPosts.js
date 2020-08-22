@@ -1,37 +1,22 @@
-import { useEffect, useState } from 'react'
+import Prismic from 'prismic-javascript'
 
-const space = '' //process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID
-const accessToken = '' //process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN
+const REPOSITORY = process.env.NEXT_PUBLIC_PRISMIC_REPO_NAME
+export const API_URL = `https://${REPOSITORY}.cdn.prismic.io/api/v2`
+export const API_TOKEN = process.env.NEXT_PUBLIC_PRISMIC_ACCESS_TOKEN
 
-// const client = require('contentful').createClient({
-//   space: space,
-//   accessToken: accessToken,
-// })
+export const client = Prismic.client(REF_API_URL, {
+  accessToken: API_TOKEN,
+})
 
-const client = {}
-
-export async function fetchEntries() {
-  const entries = await client.getEntries()
-  if (entries.items) return entries.items
-  console.log(`Error getting Entries for ${contentType.name}.`)
+export default function Client(req = null) {
+  Prismic.client(apiEndpoint, createClientOptions(req, API_TOKEN))
 }
 
-export function usePosts() {
-  const [posts, setPosts] = useState([])
-
-  useEffect(() => {
-    async function getPosts() {
-      const allPosts = await fetchEntries()
-      let arr = allPosts.map((p) => {
-        return p.fields
-      })
-
-      setPosts(arr)
-    }
-    getPosts()
-  }, [])
-
-  return posts
+const createClientOptions = (req = null, prismicAccessToken = null) => {
+  const reqOption = req ? { req } : {}
+  const accessTokenOption = prismicAccessToken ? { accessToken: prismicAccessToken } : {}
+  return {
+    ...reqOption,
+    ...accessTokenOption,
+  }
 }
-
-export default { usePosts }

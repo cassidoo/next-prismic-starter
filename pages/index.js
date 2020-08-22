@@ -1,14 +1,12 @@
 import Head from 'next/head'
 
-import { usePosts } from '@utils/prismicPosts'
+import fetchEntries from '@utils/prismicPosts'
 
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 import Post from '@components/Post'
 
-export default function Home() {
-  const posts = usePosts()
-
+export default function Home({ posts }) {
   return (
     <div className="container">
       <Head>
@@ -19,9 +17,10 @@ export default function Home() {
       <main>
         <Header />
         <div className="posts">
-          {posts.map((p) => {
-            return <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} />
-          })}
+          {/* {posts !== undefined &&
+            posts.map((p) => {
+              return <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} />
+            })} */}
         </div>
       </main>
 
@@ -67,14 +66,15 @@ export default function Home() {
   )
 }
 
-// export async function getStaticProps({ params, preview = false, previewData }) {
-//   const data = await getPostAndMorePosts(params.slug, previewData)
+export async function getStaticProps() {
+  const res = await fetchEntries()
+  const posts = await res.map((p) => {
+    return p.fields
+  })
 
-//   return {
-//     props: {
-//       preview,
-//       post: data?.post ?? null,
-//       morePosts: data?.morePosts ?? [],
-//     },
-//   }
-// }
+  return {
+    props: {
+      posts,
+    },
+  }
+}
