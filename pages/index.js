@@ -69,6 +69,8 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps() {
+  // query() is empty on purpose!
+  // https://prismic.io/docs/rest-api/query-the-api/query-all-documents
   const res = await client.query('')
 
   const posts = res.results.map((p) => {
