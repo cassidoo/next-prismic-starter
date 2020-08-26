@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import fetchEntries from '@utils/prismicPosts'
+import { client } from '@utils/prismicPosts'
 
 import Header from '@components/Header'
 import Footer from '@components/Footer'
@@ -17,10 +17,12 @@ export default function Home({ posts }) {
       <main>
         <Header />
         <div className="posts">
-          {/* {posts !== undefined &&
+          {posts !== undefined &&
             posts.map((p) => {
-              return <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} />
-            })} */}
+              let title = p.title[0].text
+              let key = `${p.date}+${title}`
+              return <Post key={key} date={p.date} image={p.image} title={title} />
+            })}
         </div>
       </main>
 
@@ -67,9 +69,10 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetchEntries()
-  const posts = await res.map((p) => {
-    return p.fields
+  const res = await client.query('')
+
+  const posts = res.results.map((p) => {
+    return p.data
   })
 
   return {
